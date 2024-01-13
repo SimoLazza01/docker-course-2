@@ -24,13 +24,15 @@ jobs:
               fgygh/fglanguage
               ghcr.io/${{ github.repository }}
           tags: latest
+          
       - name: Build and push Docker images
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: .
+          context: .  # Questo dovrebbe essere il percorso della cartella contenente il Dockerfile
+          dockerfile: ./Dockerfile  # Sostituisci con il percorso corretto del tuo Dockerfile
           push: true
-          tags: ${{ steps.meta_pytorch.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          uses: actions/checkout@v2
+          tags: ${{ steps.meta2.outputs.tags }}
+          labels: ${{ steps.meta2.outputs.labels }}
+
       - name: Clean Image
         run: docker stop dockerContainer docker rm dockerContainer
